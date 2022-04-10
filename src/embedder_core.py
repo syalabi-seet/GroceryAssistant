@@ -182,30 +182,30 @@ class Recipe1MDataset:
             corpus_dict.append({
                 'token': ingredient, 'frequency': frequency, 'token_id': i})
                 
-        with open("corpus.json", 'w') as f:
+        with open("data/corpus.json", 'w') as f:
             json.dump(corpus_dict, f, indent=4)
     
     def save_recipes(self, recipes):
-        with open("recipes.json", "w") as f:
+        with open("data/recipes.json", "w") as f:
             json.dump(recipes, f, indent=4)
 
 
 class Embedder:
     def __init__(self, args):
         self.args = args
-        self.model_path = 'word2vec.kv'
+        self.model_path = 'data/word2vec.kv'
         self.model = self.get_model()
         self.vocab = list(self.model.key_to_index.keys())
         logger.debug("Vocabulary loaded")
         self.vectors = self.get_document_vectors()
 
     def load_raw_data(self):
-        with open("recipes.json") as f:
+        with open("data/recipes.json") as f:
             data = json.load(f)
         return data
     
     def load_cleaned_data(self):
-        with open("clean_recipes.json") as f:
+        with open("data/clean_recipes.json") as f:
             data = json.load(f)   
         logger.debug("Recipe database loaded")   
         return data
@@ -244,7 +244,7 @@ class Embedder:
         out_m.close()
 
     def get_document_vectors(self):
-        if not os.path.exists("doc_vectors.npy"):
+        if not os.path.exists("data/doc_vectors.npy"):
             vectors = []
             for recipe in track(self.recipes, total=len(self.load_data())):
                 ingredients = recipe['ingredients']
@@ -253,10 +253,10 @@ class Embedder:
                     document_vector = np.mean(document_vector, axis=0)
                     vectors.append(document_vector)
             vectors = np.stack(vectors, axis=0)
-            np.save("doc_vectors", vectors)
+            np.save("data/doc_vectors", vectors)
             logger.debug("Document vectors saved")
         else:
-            vectors = np.load("doc_vectors.npy")
+            vectors = np.load("data/doc_vectors.npy")
         logger.debug("Document vectors loaded")
         return vectors
 
