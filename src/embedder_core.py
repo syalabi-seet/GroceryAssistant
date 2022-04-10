@@ -28,14 +28,10 @@ def ArgumentParser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--random_state', default=42)
     parser.add_argument('--window_size', default=5)
-    parser.add_argument('--batch_size', default=64)
     parser.add_argument('--vocab_size', default=10000)
     parser.add_argument('--sequence_length', default=4)
     parser.add_argument('--num_sampled', default=64)
     parser.add_argument('--embed_size', default=128)
-    parser.add_argument('--n_shards', default=5)
-    parser.add_argument('--test_size', default=0.2)
-    parser.add_argument('--buffer_size', default=1024)
     parser.add_argument('--workers', default=(mp.cpu_count() // 4))
     return parser.parse_known_args()[0]
 
