@@ -1,0 +1,7 @@
+streamlit
+regex
+rich
+nltk
+gensim
+loguru
+rpa

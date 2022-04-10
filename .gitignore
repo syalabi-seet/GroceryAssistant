@@ -1,0 +1,8 @@
+Recipe1M+/
+clean_recipes.json
+corpus.json
+recipes.json
+doc_vectors.npy
+rpa_python.log
+rpa.ipynb
+main.ipynb
