@@ -93,18 +93,18 @@ if __name__ == "__main__":
                         with st.spinner("Calculating..."):
                             if postal_code:
                                 st.session_state['buyer'] = BuyerAssistant(postal_code, embedder)
+                                cart, costing = st.session_state['buyer'].fetch(final_ingredients)
+                                st.session_state['cart'] = cart
+                                logger.debug("Calculation complete")
+                                st.dataframe(st.session_state['cart'])
+                                output_string = ", ".join([
+                                    f"Sub-total: ${costing['sub_total']:.2f}",
+                                    f"Delivery fee: ${costing['delivery_fee']:.2f}",
+                                    f"Service fee: ${costing['service_fee']:.2f}",
+                                    f"Total: ${costing['total']:.2f}"])
+                                st.text(output_string)
                             else:
-                                st.error("Please input your postal code")
-                            cart, costing = st.session_state['buyer'].fetch(final_ingredients)
-                            st.session_state['cart'] = cart
-                            logger.debug("Calculation complete")
-                            st.dataframe(st.session_state['cart'])
-                            output_string = ", ".join([
-                                f"Sub-total: ${costing['sub_total']:.2f}",
-                                f"Delivery fee: ${costing['delivery_fee']:.2f}",
-                                f"Service fee: ${costing['service_fee']:.2f}",
-                                f"Total: ${costing['total']:.2f}"])
-                            st.text(output_string)           
+                                st.error("Please input your postal code")       
 
                 if st.session_state['cart']:
                     if st.button('Checkout'):
