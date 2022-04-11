@@ -1,5 +1,6 @@
 Recipe1M+/
 data/
+report_items/
 clean_recipes.json
 corpus.json
 recipes.json
@@ -8,3 +9,4 @@ rpa_python.log
 word2vec.kv
 rpa.ipynb
 main.ipynb
+src/workspace.code-workspace

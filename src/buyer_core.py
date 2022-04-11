@@ -9,22 +9,20 @@ class BuyerAssistant:
         self.url = 'https://www.fairprice.com.sg/'
         self.embedder = embedder.model
     
+
     def input_postal_code(self):
         r.url(self.url)
-        r.wait(2)
         r.click("//div[@class='sc-176z9a9-2 jzsXqR']")
-        r.wait(1)
         r.type("//input[@class='sc-1x6nxah-2 hrYVGw']", self.postal_code)
-        r.wait(1)
         r.click("//div[@class='suggestion-item']")
-        r.wait(1)
         r.click("//div[@class='sc-1h9j3i1-23 ryhaZ']//button[@class='sc-1h9j3i1-11 jiKreI']")
-        r.wait(1)
+
 
     def go_shopping_cart(self):
         shopping_cart_button = "//a[@class='sc-isr5sq-4 UHQoa']"
         r.click(shopping_cart_button)    
         r.wait(1)
+
 
     def clear_shopping_cart(self):
         if r.present("//span[@class='sc-isr5sq-6 eXWdks']"):
@@ -33,6 +31,7 @@ class BuyerAssistant:
             r.click("//button[@class='sc-2dwxu7-7 kjkypd']")  
             r.wait(1)
             r.click("//button[@class='sc-rky8kf-5 cTjlFh']")
+
 
     def get_best_item(self, ingredient):
         r.url(f'{self.url}search?query={ingredient}')
@@ -52,7 +51,7 @@ class BuyerAssistant:
         # Get the first 'in-stock' item recommendation
         i, j = 1, 0
         while True:
-            r.wait(1)
+            r.wait(2)
             cart_button = "//button[@class='sc-1axwsmm-7 euWJQc']"
             add_cart_button = f"{item_container}[{i}]{cart_button}"
 
@@ -82,6 +81,7 @@ class BuyerAssistant:
                     new_ingredient = self.embedder.most_similar(ingredient)[0][0]
                     logger.warning(f"[{ingredient}] is out of stock, retrying with [{new_ingredient}]")
                     self.get_best_item(new_ingredient)
+                    
 
 
     def add_item(self, best_item, cart_button):
@@ -117,7 +117,7 @@ class BuyerAssistant:
 
 
     def fetch(self, ingredients):
-        r.init(headless_mode=True)
+        r.init(headless_mode=False)
         logger.debug("Browser opened")
         self.input_postal_code()
         logger.debug("Postal code entered")

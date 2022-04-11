@@ -2,6 +2,7 @@ import streamlit as st
 from embedder_core import *
 from buyer_core import *
 
+
 if __name__ == "__main__":  
     # Initialize states
     if 'button_clicked' not in st.session_state:
