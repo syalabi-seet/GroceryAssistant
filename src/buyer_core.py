@@ -117,7 +117,7 @@ class BuyerAssistant:
 
 
     def fetch(self, ingredients):
-        r.init(headless_mode=False)
+        r.init(headless_mode=True)
         logger.debug("Browser opened")
         self.input_postal_code()
         logger.debug("Postal code entered")
